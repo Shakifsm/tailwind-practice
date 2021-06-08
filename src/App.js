@@ -1,24 +1,62 @@
-import logo from './logo.svg';
 import './App.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import Navbar from './components/Navbar/Navbar';
+import Footer from './components/Footer/Footer';
+import About from './components/About/About';
+import Home from './components/Home/Home';
+import Menu from './components/Menu/Menu';
+import Dropdown from './components/Dropdown/Dropdown';
+import { useEffect, useState } from 'react';
+
 
 function App() {
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toogle = () =>{
+    setIsOpen(!isOpen)
+  }
+
+  useEffect(() =>{
+    const hideMenu = () =>{
+      if(window.innerWidth > 768 && isOpen){
+        setIsOpen(false)
+      }
+    }
+
+    window.addEventListener('resize', hideMenu);
+
+    return () =>{
+      window.removeEventListener('resize', hideMenu)
+    }
+    
+  })
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Navbar toogle={toogle}></Navbar>
+      <Dropdown toogle={toogle} isOpen={isOpen}></Dropdown>
+      <Switch>
+        <Route path="/home">
+          <Home></Home>
+        </Route>
+        <Route path="/about">
+          <About></About>
+        </Route>
+        <Route path="/menu">
+          <Menu></Menu>
+        </Route>
+        <Route exact path="/">
+          <Home></Home>
+        </Route>
+      </Switch>
+      <Footer></Footer>
+    </Router>
   );
 }
 
