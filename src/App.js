@@ -11,6 +11,7 @@ import Home from './components/Home/Home';
 import Menu from './components/Menu/Menu';
 import Dropdown from './components/Dropdown/Dropdown';
 import { useEffect, useState } from 'react';
+import Contact from './components/Contact/Contact';
 
 
 function App() {
@@ -49,6 +50,9 @@ function App() {
         </Route>
         <Route path="/menu">
           <Menu></Menu>
+        </Route>
+        <Route path="/contact">
+          <Contact></Contact>
         </Route>
         <Route exact path="/">
           <Home></Home>
